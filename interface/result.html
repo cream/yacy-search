@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+        <title>YaCy Frontend</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        
+        <style type="text/css">
+            body {
+                font-family: "Sans";
+                font-size: 9pt;
+            }
+            
+            #result-list {
+                width: 350px;
+                padding: 5px;
+            }
+            
+            .list-entry {
+                display: block;
+                
+                padding: 10px;
+                
+                border-bottom: 1px solid rgba(0, 0, 0, .05);
+                
+                text-decoration: none;
+            }
+            
+                .inner-entry-top {
+                    font-size: 1.2em;
+                    padding-bottom: 5px;
+                }
+                
+                    .inner-entry-top img, .inner-entry-top a {
+                        float: left;
+                    }
+                    
+                    .inner-entry-top img {
+                        margin-right: 10px;
+                        width: 22px;
+                        position: relative;
+                        top: -3px;
+                    }
+                    
+                    .inner-entry-top a {
+                        color: #00aadd;
+                    }
+                    
+                .inner-entry-bottom {
+                    padding-top: 10px;
+                    font-size: .8em;
+                    color: #979797;
+                }
+                    
+                    .inner-entry-bottom a {
+                        color: #003388;
+                        text-decoration: none;
+                    }
+        </style>
+        
+        <!-- The JavaScript framework we are using. -->
+        <script type="text/javascript" src="mootools.js" />
+        <script type="text/javascript" src="mootools-more.js" />
+        
+        <script type="text/javascript">
+            number_of_entries = 0;
+
+            function add_item(title, descr, uri, icon_uri, size) {
+                number_of_entries++;
+                
+                entry = new Element('div', {
+                    'class': 'list-entry',
+                    'id': number_of_entries
+                });
+                
+                entry.fade('hide');
+                
+                entry_inner_top = new Element('div', {
+                    'class': 'inner-entry-top'
+                });
+                
+                    entry_icon = new Element('img', {
+                        'src': icon_uri,
+                        'class': 'entry_icon'
+                    });
+                    
+                    entry_title = new Element('a', {
+                        'class': 'entry-title',
+                        'text': title
+                    });
+                    
+                    clear_top = new Element('div', {
+                        'style': 'clear: left;'
+                    })
+                
+                entry_inner_middle = new Element('div', {
+                    'class': 'inner-entry-middle',
+                    'text': descr
+                });
+                
+                entry_inner_bottom = new Element('div', {
+                    'class': 'inner-entry-bottom'
+                });
+                
+                    entry_bottom_link = new Element('a', {
+                        'href': uri,
+                        'text': uri
+                    });
+                    
+                    entry_bottom_size = new Element('span', {
+                        'text': size
+                    });
+                
+                entry_inner_top.grab(entry_icon);
+                entry_inner_top.grab(entry_title);
+                entry_inner_top.grab(clear_top);
+                
+                entry_inner_bottom.grab(entry_bottom_link);
+                entry_inner_bottom.grab(entry_bottom_size);
+                
+                entry.grab(entry_inner_top);
+                entry.grab(entry_inner_middle);
+                entry.grab(entry_inner_bottom);
+                
+                $('result-list').grab(entry);
+
+                entry.fade('in');
+                
+                return number_of_entries;
+            }
+            
+            function clear_all_items() {
+                slide = new Fx.Slide('result-list');
+                fade = new Fx.Tween('result-list', {duration:200});
+                fade.start('opacity', 1, 0);
+                slide.slideOut().chain(
+                    function(){
+                        $('result-list').empty();
+                });
+            }
+            
+            function remove_item(id) {
+                $(id).slide('out');
+            }
+            
+            window.addEvent('domready', function() {
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="result-list">
+        </div>
+        
+        <!--
+            <div class="list-entry">
+                <div class="inner-entry-top">
+                    <img src="someicon.png" class="entry-icon" />
+                    <a href="#" class="entry-title">Experience Apple's new iPad nano 12GS</a>
+                    <div style="clear: left;"></div>
+                </div>
+                <div class="inner-entry-middle">
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                    magna aliquyam erat, sed diam voluptua.
+                </div>
+                <div class="inner-entry-bottom">
+                    <a href="#">http://foobar.com</a> - 186k
+                </div>
+            </div>-->
+        
+    </body>
+</html>
